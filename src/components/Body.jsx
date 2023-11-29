@@ -30,20 +30,25 @@ export default function Body() {
   };
 
   const handleDone = (e) => {
-    e.target.parentElement.classList.toggle("line-through");
     const checkboxes = document.querySelectorAll(".check");
 
     checkboxes.forEach((checkbox) => {
-      checkbox.title = checkbox.title === "pending" ? "completed" : "pending";
+      if (checkbox.checked) {
+        checkbox.title = "completed";
+        checkbox.parentElement.classList.add("line-through");
+      } else {
+        checkbox.title = "pending";
+        checkbox.parentElement.classList.remove("line-through");
+      }
     });
   };
 
   return (
     <>
       <div className="bg-slate-900 h-screen text-white text-center flex items-center flex-col justify-center">
-        <h1 className="my-6">Todos</h1>
+        <h1 className="my-6">Task Manager</h1>
         <div className="bg-slate-800 h-[30rem] w-[25rem] rounded-md p-4">
-          <h2>Enter a new todo</h2>
+          <h2>Enter a new task</h2>
           <div className="flex items-center m-2">
             <input
               type="text"
