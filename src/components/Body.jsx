@@ -4,7 +4,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 export default function Body() {
   const [todos, setTodos] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState("");
 
   useEffect(() => {
     axios
@@ -19,6 +19,7 @@ export default function Body() {
     const newId = `task_${todos.length}`;
     sessionStorage.setItem(newId, tasks);
     setTodos([...todos, { id: todos.length + 1, title: tasks }]);
+    setTasks("");
   };
 
   const handleDelete = (id) => {
@@ -26,6 +27,15 @@ export default function Body() {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     sessionStorage.removeItem(`task_${id}`);
     setTodos(updatedTodos);
+  };
+
+  const handleDone = (e) => {
+    e.target.parentElement.classList.toggle("line-through");
+    const checkboxes = document.querySelectorAll(".check");
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.title = checkbox.title === "pending" ? "completed" : "pending";
+    });
   };
 
   return (
@@ -39,6 +49,7 @@ export default function Body() {
               type="text"
               className="h-[3rem] w-[85%] rounded-md my-2 text-black pl-3"
               value={tasks}
+              required
               onChange={(e) => setTasks(e.target.value)}
             ></input>
             <button
@@ -65,11 +76,21 @@ export default function Body() {
                       key={todo.id}
                       className="bg-violet-900 h-[3.5rem] w-100 rounded-md m-2 text-left pl-3 flex items-center justify-between group"
                     >
-                      {todo.title}
+                      <input
+                        type="checkbox"
+                        className="check"
+                        id="check"
+                        title="pending"
+                        onClick={handleDone}
+                      />
+                      {todo.title === ""
+                        ? (todo.title = "Untitled")
+                        : todo.title.charAt(0).toUpperCase() +
+                          todo.title.slice(1)}
                       <div
                         onClick={() => handleDelete(todo.id)}
                         className="bg-red-600 h-[3.5rem] w-[2rem] flex items-center justify-center relative right-0 rounded-md
-                      cursor-pointer translate-x-[3rem] invisible group-hover:translate-x-0 group-hover:visible transition-all duration-400 ease-in-out"
+                        cursor-pointer translate-x-[3rem] invisible group-hover:translate-x-0 group-hover:visible transition-all duration-400 ease-in-out"
                       >
                         <AiOutlineDelete />
                       </div>
