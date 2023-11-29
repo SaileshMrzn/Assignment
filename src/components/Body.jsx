@@ -6,6 +6,7 @@ export default function Body() {
   const [todos, setTodos] = useState([]);
   const [tasks, setTasks] = useState("");
 
+  //get tasks from mock api
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/todos")
@@ -15,6 +16,7 @@ export default function Body() {
       .catch((err) => console.log(err));
   }, []);
 
+  //Task addition
   const handleAdd = () => {
     const newId = `task_${todos.length}`;
     sessionStorage.setItem(newId, tasks);
@@ -22,6 +24,7 @@ export default function Body() {
     setTasks("");
   };
 
+  //Task deletion
   const handleDelete = (id) => {
     console.log(id);
     const updatedTodos = todos.filter((todo) => todo.id !== id);
@@ -29,6 +32,7 @@ export default function Body() {
     setTodos(updatedTodos);
   };
 
+  //Update task status on hovering checkbox
   const handleDone = (e) => {
     const checkboxes = document.querySelectorAll(".check");
 
@@ -43,6 +47,7 @@ export default function Body() {
     });
   };
 
+  //styling
   return (
     <>
       <div className="bg-slate-900 h-screen text-white text-center flex items-center flex-col justify-center">
