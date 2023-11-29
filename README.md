@@ -1,4 +1,4 @@
-# Assignment Title: E-commerce Development Task
+# Task Management Application
 
 ## Description
 
@@ -9,13 +9,13 @@ In this assignment, a basic task management application was made using React.js.
 Clone the project
 
 ```bash
-  git clone git@github.com:SaileshMrzn/frontend-assignment-2.git
+  git clone git@github.com:SaileshMrzn/Assignment.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd frontend-assignment-2
+  cd Assignment
 ```
 
 Install dependencies
