@@ -9,7 +9,7 @@ export default function Body() {
   //get tasks from mock api
   useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/todos")
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=3")
       .then((result) => {
         setTodos(result.data);
       })
@@ -78,35 +78,33 @@ export default function Body() {
                 <h2>No todos yet</h2>
               </div>
             ) : (
-              todos
-                .filter((todo) => todo.id < 4 || todo.id > 200)
-                .map((todo) => {
-                  return (
+              todos.map((todo) => {
+                return (
+                  <div
+                    key={todo.id}
+                    className="bg-violet-900 h-[3.5rem] w-100 rounded-md m-2 text-left pl-3 flex items-center justify-between group"
+                  >
+                    <input
+                      type="checkbox"
+                      className="check"
+                      id="check"
+                      title="pending"
+                      onClick={handleDone}
+                    />
+                    {todo.title === ""
+                      ? (todo.title = "Untitled")
+                      : todo.title.charAt(0).toUpperCase() +
+                        todo.title.slice(1)}
                     <div
-                      key={todo.id}
-                      className="bg-violet-900 h-[3.5rem] w-100 rounded-md m-2 text-left pl-3 flex items-center justify-between group"
-                    >
-                      <input
-                        type="checkbox"
-                        className="check"
-                        id="check"
-                        title="pending"
-                        onClick={handleDone}
-                      />
-                      {todo.title === ""
-                        ? (todo.title = "Untitled")
-                        : todo.title.charAt(0).toUpperCase() +
-                          todo.title.slice(1)}
-                      <div
-                        onClick={() => handleDelete(todo.id)}
-                        className="bg-red-600 h-[3.5rem] w-[2rem] flex items-center justify-center relative right-0 rounded-md
+                      onClick={() => handleDelete(todo.id)}
+                      className="bg-red-600 h-[3.5rem] w-[2rem] flex items-center justify-center relative right-0 rounded-md
                         cursor-pointer translate-x-[3rem] invisible group-hover:translate-x-0 group-hover:visible transition-all duration-400 ease-in-out"
-                      >
-                        <AiOutlineDelete />
-                      </div>
+                    >
+                      <AiOutlineDelete />
                     </div>
-                  );
-                })
+                  </div>
+                );
+              })
             )}
           </div>
         </div>
