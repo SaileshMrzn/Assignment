@@ -26,7 +26,6 @@ export default function Body() {
 
   //Task deletion
   const handleDelete = (id) => {
-    console.log(id);
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     sessionStorage.removeItem(`task_${id}`);
     setTodos(updatedTodos);
